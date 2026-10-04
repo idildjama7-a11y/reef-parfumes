@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Reef Parfumes - Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+
+    <div class="logo">
+        Reef Parfumes
+    </div>
+
+    <div class="nav-links">
+        <a href="parfume.html">Home</a>
+        <a href="#parfumes">Parfumes</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About Us</a>
+    </div>
+
+   
+   
+
+</nav>
+<section class="hero" id="home">
+    <img src="images/rr.jpg" class="floating-perfume">
+    <div class="hero-content">
+ 
+    <h1>Reef parfume</h1>
+       <p>Elegant perfumes that stay in your memory.</p>
+        <button onclick="document.getElementById('parfumes').scrollIntoView({behavior: 'smooth'})">
+    Discover Perfumes
+</button>
+</div>
+
+
+</section>
+
+  <div class="cart-page">
+
+    <h1>Your Cart</h1>
+<div id="cart-items"></div>
+
+<p id="empty-cart-message" style="display: none;">
+    Your cart is empty.
+</p>
+    <a href="parfume.html" class="continue-shopping">Continue Shopping</a>
+    <p id="cart-total">Total: 0$</p>
+    <div class="checkout-form">
+
+    <h2>Place Your Order</h2>
+
+    <input type="text" id="customer-name" placeholder="Your Name">
+
+    <input type="tel" id="customer-phone" placeholder="Phone Number">
+
+    <textarea id="customer-address" placeholder="Your Address"></textarea>
+
+    <button id="place-order">Place Order</button>
+
+</div>
+
+</div>
+
+ <script>
+
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartItems = document.querySelector("#cart-items");
+const cartTotal = document.querySelector("#cart-total");
+const emptyCartMessage = document.querySelector("#empty-cart-message");
+
+if (cart.length === 0) {
+    emptyCartMessage.style.display = "block";
+}
+
+const productCounts = {};
+
+cart.forEach(function(product) {
+
+    const productName = product.name;
+
+    if (!productCounts[productName]) {
+        productCounts[productName] = {
+            quantity: 0,
+            price: product.price
+        };
+    }
+
+    productCounts[productName].quantity++;
+});
+
+
+function updateCartTotal() {
+
+    let total = 0;
+
+    Object.keys(productCounts).forEach(function(product) {
+
+        total +=
+            productCounts[product].quantity *
+            productCounts[product].price;
+
+    });
+
+   cartTotal.textContent = "Total: " + total + "$";
+}
+
+
+Object.keys(productCounts).forEach(function(product) {
+
+    const item = document.createElement("p");
+
+    function updateItem() {
+
+        const quantity = productCounts[product].quantity;
+        const price = productCounts[product].price;
+        const itemTotal = quantity * price;
+
+      item.textContent =
+    product +
+    " - " + price + "$ × " + quantity +
+    " = " + itemTotal + "$ ";
+        const minusButton = document.createElement("button");
+        minusButton.textContent = "−";
+
+        const plusButton = document.createElement("button");
+        plusButton.textContent = "+";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+
+
+        minusButton.addEventListener("click", function() {
+
+            const index = cart.findIndex(function(item) {
+                return item.name === product;
+            });
+
+            if (index !== -1) {
+                cart.splice(index, 1);
+                productCounts[product].quantity--;
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCartTotal();
+
+            if (productCounts[product].quantity === 0) {
+                item.remove();
+                delete productCounts[product];
+            } else {
+                updateItem();
+            }
+
+        });
+
+
+        plusButton.addEventListener("click", function() {
+
+            cart.push({
+                name: product,
+                price: productCounts[product].price
+            });
+
+            productCounts[product].quantity++;
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCartTotal();
+
+            updateItem();
+
+        });
+
+
+        deleteButton.addEventListener("click", function() {
+
+            for (let i = cart.length - 1; i >= 0; i--) {
+
+                if (cart[i].name === product) {
+                    cart.splice(i, 1);
+                }
+
+            }
+
+            delete productCounts[product];
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCartTotal();
+
+            item.remove();
+
+        });
+
+
+        item.appendChild(minusButton);
+        item.appendChild(plusButton);
+        item.appendChild(deleteButton);
+
+    }
+
+    updateItem();
+
+    cartItems.appendChild(item);
+
+});
+
+
+updateCartTotal();
+
+
+const placeOrder = document.querySelector("#place-order");
+
+placeOrder.addEventListener("click", function() {
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    const name = document.querySelector("#customer-name").value;
+    const phone = document.querySelector("#customer-phone").value;
+    const address = document.querySelector("#customer-address").value;
+
+    if (name === "" || phone === "" || address === "") {
+        alert("Please fill in all your information.");
+        return;
+    }
+
+
+    const productsMessage = Object.keys(productCounts)
+        .map(function(product) {
+
+            const quantity = productCounts[product].quantity;
+            const price = productCounts[product].price;
+
+            return product +
+                " x " + quantity +
+                " = $" + (quantity * price);
+
+        })
+        .join("\n");
+
+
+    let total = 0;
+
+    Object.keys(productCounts).forEach(function(product) {
+
+        total +=
+            productCounts[product].quantity *
+            productCounts[product].price;
+
+    });
+
+
+    const message =
+        "New Order\n\n" +
+        "Name: " + name + "\n" +
+        "Phone: " + phone + "\n" +
+        "Address: " + address + "\n\n" +
+        "Products:\n" +
+        productsMessage + "\n\n" +
+        "Total: $" + total;
+
+
+    const whatsappNumber = "25377125061";
+
+    const whatsappURL =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(whatsappURL, "_blank");
+
+    localStorage.removeItem("cart");
+
+    document.querySelector("#customer-name").value = "";
+    document.querySelector("#customer-phone").value = "";
+    document.querySelector("#customer-address").value = "";
+
+});
+
+</script>
+</body>
+
+</html>
+

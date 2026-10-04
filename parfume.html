@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>Reef Parfume</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	 <body>
+<nav>
+
+    <div class="logo">
+        Reef Parfumes
+    </div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#parfumes">Parfumes</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About Us</a>
+    </div>
+
+   
+   
+
+</nav>
+
+<section class="hero" id="home">
+	<img src="images/rr.jpg" class="floating-perfume">
+	<div class="hero-content">
+ 
+	<h1>Reef parfumes</h1>
+	   <p>Elegant perfumes that stay in your memory.</p>
+		<button onclick="document.getElementById('parfumes').scrollIntoView({behavior: 'smooth'})">
+    Discover Perfumes
+</button>
+</div>
+
+
+</section>
+<section class="products" id="parfumes">
+
+    
+    <h2>Our Parfumes</h2>
+
+    <div class="search-row">
+
+    <div class="search-box">
+    <input type="text" id="search-input" placeholder="Search for a perfume...">
+    <span id="no-results" style="display: none;">No perfumes found.</span>
+</div>
+
+
+</div>
+ <div class="product-conainer">
+           <a href="cart.html" class="floating-cart">
+    🛒 <span id="cart-count">0</span>
+</a>
+            <div class="cart-box" id="cart-box">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+</div>
+
+        <div class="product-card">
+            <img src="images/oud.jpg">
+            <h3>oud parfume</h3>
+            <p>A deep and elegant oud scent for special moments.</p>
+        <button class="details-btn"data-product="Oud Perfume" data-description="A deep and elegant oud scent for special moments."data-price="30" data-fragrance="Woody & Oriental" data-ingredients="Oud, Amber & Musk" data-size="50ml" data-lasting="Long lasting">  View Details</button>
+		</div>
+        <div class="product-card">
+        	<img src="images/oud.jpg">
+
+        	<h3>Vanilla Perfume</h3>
+			<p>A sweet and warm vanilla scent for everyday moments.</p>
+			
+			<button class="details-btn"data-product="Vanilla Perfume" data-description="A sweet and warm vanilla scent for everyday moments." data-price="45"data-fragrance="Sweet & Warm" data-ingredients="Vanilla, Amber & Musk" data-size="50ml" data-lasting="Long lasting">View Details</button>
+        </div>
+
+         <div class="product-card">
+            <img src="images/oud.jpg">
+            <h3>Rose Perfume</h3>
+            <p>A soft and elegant rose scent for beautiful moments.</p>
+         <button class="details-btn"data-product="Rose Perfume" data-description="A soft and elegant rose scent for beautiful moments." data-price="45" data-fragrance="Floral"  data-ingredients="Rose, Jasmine & Musk"  data-size="50ml" data-lasting="Long lasting">  View Details </button>
+
+      
+
+
+        </div>
+
+   <div class="product-card">
+            <img src="images/oud.jpg">
+
+            <h3>Musk Perfume</h3>
+            <p> soft and elegant musk scent for a beautiful everyday touch.</p>
+       
+          <button class="details-btn" data-product="Musk Perfume"  data-description="A soft and elegant musk scent for a beautiful everyday touch."
+    data-price="30" data-fragrance="Soft & Musky" data-ingredients="Musk, Rose & Amber"  data-size="50ml"  data-lasting="Long lasting"> View Details</button>
+
+        </div>
+
+
+       
+
+
+</section>
+      
+ <section class="why-us">
+ 	<h2>Why choose us</h2>
+ 	<div class="features">
+ 		<div>
+ 			<h3>✨ Long Lasting</h3>
+            <p>A beautiful scent that lasts for hours.</p>
+ 		</div>
+
+      <div>
+      	<h3>🌸 Beautiful Scents</h3>
+            <p>Carefully selected fragrances for every occasion.</p>
+      </div>
+
+        <div>
+      	<h3>💰 Good Price</h3>
+            <p>Elegant perfumes at a price worth the product.</p>
+      </div>
+
+ 	</div>
+ </section>
+ <section class="contact" id="contact">
+ 	<h2>Contact Us</h2>
+ 	<form>
+ 		<input type="text" placeholder="enter your name">
+ 		<input type="email"  placeholder="enter you email">
+ 		<textarea placeholder="your message"></textarea>
+ 		<p id="selected-product"></p>
+ 		<button type="submit">send message</button>
+ 	</form>
+   <a href="https://wa.me/25377125061"
+   class="whatsapp-button"
+   target="_blank"
+   aria-label="Contact us on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span>Contact us on Whatsapp</span>
+</a>
+ 	
+ </section>
+    <section class="about" id="about">
+    <h2>About Us</h2>
+    <p>
+        Reef Parfumes offers elegant scents made for beautiful moments.
+        We believe that every perfume can create a special memory.
+    </p>
+</section>
+
+  <div id="product-modal" class="product-modal">
+
+    <div class="modal-content">
+
+        <span id="close-modal">&times;</span>
+        <h2 id="modal-name">oud parfume</h2>
+
+       <p id="modal-description">
+    A warm and elegant scent for special moments.
+</p>
+
+<div class="product-info">
+
+    <p><strong>Fragrance:</strong> <span id="modal-fragrance"></span></p>
+
+    <p><strong>Ingredients:</strong> <span id="modal-ingredients"></span></p>
+
+    <p><strong>Size:</strong> <span id="modal-size"></span></p>
+
+    <p><strong>Long Lasting:</strong> <span id="modal-lasting"></span></p>
+
+</div>
+<p id="modal-price"> 30$</p>
+<div class="quantity-selector">
+    <button id="decrease-quantity">−</button>
+    <span id="quantity">0</span>
+    <button id="increase-quantity">+</button>
+</div>
+
+        <button id="modal-order">Add to Cart</button>
+
+    </div>
+
+</div>
+
+ <footer>
+ 	  <p>© 2026 Reef Perfume. All rights reserved.</p>
+    <p>Elegant scents, beautiful memories.</p>
+ </footer>
+     
+	<script src="script.js"></script>
+</body>
+</html>
